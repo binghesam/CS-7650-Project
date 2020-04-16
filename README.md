@@ -1,2 +1,2 @@
 # CS-7650-Project
-muti-word bias neutralization
+muti-word bias neutralization.
