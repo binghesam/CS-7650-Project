@@ -13,7 +13,7 @@ import sys; sys.path.append('.')
 from data import get_dataloader
 CUDA = (torch.cuda.device_count() > 0)
 if CUDA:
-    torch.cuda.set_device(0) # default 0, change it to the gpu with maximal ram
+    torch.cuda.set_device(ARGS.gpuid) # default 0, change it to the gpu with maximal ram
 
 
 if not os.path.exists(ARGS.working_dir):

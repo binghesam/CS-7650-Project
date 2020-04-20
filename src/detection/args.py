@@ -1,5 +1,14 @@
 import argparse
 parser = argparse.ArgumentParser()
+
+parser.add_argument(
+    "--gpuid",
+    type=int,
+    help="set the gpu id",
+    default=0
+)
+
+
 parser.add_argument(
     "--train",
     help="train prefix",
