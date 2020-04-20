@@ -16,16 +16,16 @@ if CUDA:
     torch.cuda.set_device(ARGS.gpuid) # default 0, change it to the gpu with maximal ram
 
 
-if not os.path.exists(ARGS.working_dir):
-    os.makedirs(ARGS.working_dir)
+# if not os.path.exists(ARGS.working_dir):
+#     os.makedirs(ARGS.working_dir)
 
-with open(ARGS.working_dir + '/command.sh', 'w') as f:
-    f.write('python' + ' '.join(sys.argv) + '\n')
+# with open(ARGS.working_dir + '/command.sh', 'w') as f:
+#     f.write('python' + ' '.join(sys.argv) + '\n')
 
 print('LOADING DATA...')
 # print("test the file")
 # ARGS.working_dir --working_dir train_tagging/
-tokenizer = BertTokenizer.from_pretrained(ARGS.bert_model, cache_dir=ARGS.working_dir + '/cache')
+tokenizer = BertTokenizer.from_pretrained(ARGS.bert_model)#, cache_dir=ARGS.working_dir + '/cache')
 tok2id = tokenizer.vocab
 tok2id['<del>'] = len(tok2id)
 
@@ -42,7 +42,6 @@ model = detection_model.BertForMultitask.from_pretrained(
     ARGS.bert_model,
     cls_num_labels=ARGS.num_categories,
     tok_num_labels=ARGS.num_tok_labels,
-    cache_dir=ARGS.working_dir + '/cache',
     tok2id=tok2id)
 
 if CUDA:
@@ -88,4 +87,4 @@ for epoch in range(ARGS.epochs):
     model.train()
 
     print('SAVING...')
-    torch.save(model.state_dict(), ARGS.working_dir + '/model_%d.ckpt' % epoch)
+    # torch.save(model.state_dict(), ARGS.working_dir + '/model_%d.ckpt' % epoch)

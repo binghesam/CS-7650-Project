@@ -306,11 +306,11 @@ def get_dataloader(data_path, tok2id, batch_size,
             add_del_tok=add_del_tok,
             categories_path=categories_path)
 
-        pickle.dump(examples, open(pickle_path, 'wb'))
+        # pickle.dump(examples, open(pickle_path, 'wb')) #  not save temp
 
     # bing length checking
-    print("length is: ", len(examples['pre_ids']))
-    exit(0)
+    print("data lines: ", len(examples['pre_ids']))
+    # exit(0)
 
     data = TensorDataset(
         torch.tensor(examples['pre_ids'], dtype=torch.long),
