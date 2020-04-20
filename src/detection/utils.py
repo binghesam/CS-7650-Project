@@ -8,9 +8,8 @@ from pytorch_pretrained_bert.optimization import BertAdam
 import sys;
 
 sys.path.append('.')
-from shared.args import ARGS
-from shared.constants import CUDA
-
+from args import ARGS
+CUDA = (torch.cuda.device_count() > 0)
 
 def build_optimizer(model, num_train_steps, learning_rate):
     global ARGS

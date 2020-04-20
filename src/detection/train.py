@@ -15,6 +15,7 @@ CUDA = (torch.cuda.device_count() > 0)
 if CUDA:
     torch.cuda.set_device(0) # default 0, change it to the gpu with maximal ram
 
+
 if not os.path.exists(ARGS.working_dir):
     os.makedirs(ARGS.working_dir)
 

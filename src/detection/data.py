@@ -13,7 +13,7 @@ from collections import defaultdict
 import sys;
 
 sys.path.append('.')
-from shared.args import ARGS
+from args import ARGS
 
 # from https://spacy.io/api/annotation#section-dependency-parsing
 RELATIONS = [
