@@ -51,6 +51,7 @@ clustering = function(x) {
 # read json file
 print("Reading json file...")
 args = commandArgs(trailingOnly=TRUE)
+args = './result_epoch_4.json'
 # args = '/Users/roib/Downloads/neutralizing-bias/src/result_epoch_4.json'
 tagger_output <- fromJSON(file=args)
 # calculate clustering index for each probability vector
