@@ -153,7 +153,10 @@ def train_for_epoch(model, train_dataloader, loss_fn, optimizer):
                               pre_len=pre_len)
         loss = loss_fn(tok_logits, tok_label_id, apply_mask=tok_label_id)
         loss.backward()
-        optimizer.step()
+        try:
+            optimizer.step()
+        except ZeroDivisionError:
+            print("small data, zero division error and not update")
         model.zero_grad()
 
         losses.append(loss.detach().cpu().numpy())
