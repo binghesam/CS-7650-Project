@@ -1,3 +1,5 @@
+#!/usr/bin/Rscript
+
 # Use the following command to run clustering
 # Rscript --vanilla clustering_BIC.R path/to/tagger/output path/to/index/output
 # example Rscript --vanilla clustering_BIC.R result_epoch_4.json biased_token_idx.json
@@ -49,6 +51,7 @@ clustering = function(x) {
 # read json file
 print("Reading json file...")
 args = commandArgs(trailingOnly=TRUE)
+args = './result_epoch_4.json'
 # args = '/Users/roib/Downloads/neutralizing-bias/src/result_epoch_4.json'
 tagger_output <- fromJSON(file=args)
 # calculate clustering index for each probability vector
