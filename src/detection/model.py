@@ -13,7 +13,7 @@ import sys;
 sys.path.append('tagging/')  # so that the joint model can see this filter
 # import features
 from args import ARGS
-CUDA = (torch.cuda.device_count() > 0)
+CUDA = (torch.cuda.device_count() > 1)
 # import seq2seq.model as seq2seq_model
 import math
 

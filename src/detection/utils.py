@@ -9,7 +9,7 @@ import sys;
 
 sys.path.append('.')
 from args import ARGS
-CUDA = (torch.cuda.device_count() > 0)
+CUDA = (torch.cuda.device_count() > 1)
 
 def build_optimizer(model, num_train_steps, learning_rate):
     global ARGS
@@ -99,6 +99,7 @@ def run_inference(model, eval_dataloader, loss_fn, tokenizer):
         'labeling_hits': []
     }
 
+    # one poch_setting: with bath with batch_size data
     for step, batch in enumerate(tqdm(eval_dataloader)):
         if ARGS.debug_skip and step > 2:
             continue
@@ -113,6 +114,7 @@ def run_inference(model, eval_dataloader, loss_fn, tokenizer):
             rel_ids, pos_ids, categories
         ) = batch
 
+
         with torch.no_grad():
             _, tok_logits = model(pre_id, attention_mask=1.0 - pre_mask,
                                   rel_ids=rel_ids, pos_ids=pos_ids, categories=categories,
@@ -125,7 +127,7 @@ def run_inference(model, eval_dataloader, loss_fn, tokenizer):
         labels = tok_label_id.cpu().numpy()
         out['tok_logits'] += logits.tolist()
         out['tok_labels'] += labels.tolist()
-        out['tok_probs'] += to_probs(logits, pre_len)
+        out['tok_probs'] += to_probs(logits, pre_len) # check the computation later!
         out['labeling_hits'] += tag_hits(logits, labels)
 
     return out

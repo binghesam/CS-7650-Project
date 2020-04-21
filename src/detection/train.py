@@ -11,7 +11,7 @@ from args import ARGS
 
 import sys; sys.path.append('.')
 from data import get_dataloader
-CUDA = (torch.cuda.device_count() > 0)
+CUDA = (torch.cuda.device_count() > 1)
 if CUDA:
     torch.cuda.set_device(ARGS.gpuid) # default 0, change it to the gpu with maximal ram
 
@@ -33,7 +33,7 @@ tok2id['<del>'] = len(tok2id)
 # learn more about the code: --- train_pkl--- hard code should be changed!--- be careful to read
 train_dataloader, num_train_examples = get_dataloader(
     ARGS.train, 
-    tok2id, ARGS.train_batch_size)
+    tok2id, ARGS.train_batch_size, test=True)
 eval_dataloader, num_eval_examples = get_dataloader(
     ARGS.test,
     tok2id, ARGS.test_batch_size, test=True)
