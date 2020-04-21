@@ -1,3 +1,5 @@
+#!/usr/bin/Rscript
+
 # Use the following command to run clustering
 # Rscript --vanilla clustering_BIC.R path/to/tagger/output path/to/index/output
 # example Rscript --vanilla clustering_BIC.R result_epoch_4.json biased_token_idx.json
