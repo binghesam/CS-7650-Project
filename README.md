@@ -11,6 +11,6 @@ $ cd ..
 $ pip install -r requirements.txt
 $ python
 >> import nltk; nltk.download("punkt")
-$ sh download_data_ckpt_and_run_inference.sh
+$ sh download_data_ckpt.sh
 ```
 
