@@ -11,4 +11,9 @@ python ./src/detection/train.py \
 --test_batch_size 16 \
 --debias_weight 1.3
 
+
 # generate the json after processing
+
+# clustering probabiliy vector for each
+# TO DO change to best epoch result
+Rscript Rscript --vanilla ./src/clustering/clustering_BIC.R result_epoch_0.json biased_token_idx.json
