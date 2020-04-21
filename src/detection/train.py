@@ -96,7 +96,7 @@ print('EVAL...')
 model.eval()
 results = utils.run_inference(model, eval_dataloader, loss_fn, tokenizer)
 ## capture results
-json_string = json.dumps({"tok_probs": results["tok_probs"]})
+json_string = json.dumps({"tok_probs": results["tok_probs"], "input_toks": results["input_toks"]})
 with open("final_result.json",'w') as f:
     f.write(json_string)
 ## added lines to capture the results

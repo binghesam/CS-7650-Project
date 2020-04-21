@@ -1,6 +1,7 @@
 # srever setting
 # *.json
 # runs/
+BingTest/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
