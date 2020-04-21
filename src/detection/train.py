@@ -88,3 +88,15 @@ for epoch in range(ARGS.epochs):
 
     print('SAVING...')
     # torch.save(model.state_dict(), ARGS.working_dir + '/model_%d.ckpt' % epoch)
+
+# final result setting
+
+# eval
+print('EVAL...')
+model.eval()
+results = utils.run_inference(model, eval_dataloader, loss_fn, tokenizer)
+## capture results
+json_string = json.dumps({"tok_logits": results["tok_logits"]})
+with open("final_result.json",'w') as f:
+    f.write(json_string)
+## added lines to capture the results
