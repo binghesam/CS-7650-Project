@@ -1,5 +1,6 @@
 # Use the following command to run clustering
-# clustering_BIC.R path/to/tagger/output path/to/index/output
+# Rscript --vanilla clustering_BIC.R path/to/tagger/output path/to/index/output
+# example Rscript --vanilla clustering_BIC.R result_epoch_4.json biased_token_idx.json
 
 require(mclust)
 require(rjson)
