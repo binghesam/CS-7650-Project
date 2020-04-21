@@ -92,7 +92,7 @@ for i in range(n_train):
 # In[17]:
 
 
-df.to_csv('../strongClassifier/Bert-Multi-Label-Text-Classification/pybert/dataset/train_sample.csv',index=False)
+df.to_csv('../strongClassifier/pybert/dataset/train_sample.csv',index=False)
 
 
 # In[76]:
