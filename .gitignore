@@ -108,3 +108,4 @@ venv.bak/
 # mypy
 .mypy_cache/
 src/dataPreprocess/biased.full
+src/strongClassifier/pybert/pretrain/bert/base-uncased/pytorch_model.bin
