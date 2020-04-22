@@ -7,8 +7,8 @@ with open('./cluster_words.txt') as f:
         line_cleaned = re.sub('##','',line_cleaned)
         biased_phrase.append(line_cleaned)
 
-with open('./cluster_words_cleaned.txt','w') as f:
+with open('./bias-unbias.space.only','w') as f:
     text = ''
     for line in biased_phrase:
-        text+=line
+        text+=line.rstrip()+'\t'+' '+'\n'
     f.write(text)

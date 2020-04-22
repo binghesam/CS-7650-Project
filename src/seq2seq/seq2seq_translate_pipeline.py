@@ -76,13 +76,21 @@ def readLangs(lang1, lang2, reverse=False):
 
     # Read the file and split into lines
     lines = open('./src/dataPreprocess/%s-%s.pair.train' % (lang1, lang2), encoding='utf-8').        read().strip().split('\n')
+    n_train = len(lines)
     lines_test = open('./src/dataPreprocess/%s-%s.pair.test' % (lang1, lang2), encoding='utf-8').        read().strip().split('\n')
-    lines.extend(lines_test)
+    lines_clustering = open('./src/clustering/%s-%s.space.only' % (lang1, lang2), encoding='utf-8').        read().strip().split('\n')
     # Split every line into pairs and normalize
 #     pairs = [[normalizeString(s) for s in l.split('\t')] for l in lines]
     pairs = []
     for l in lines:
         pairs.append([normalizeString(s) for s in l.split('\t')[:2]])
+    for l in lines_test:
+        pairs.append([normalizeString(s) for s in l.split('\t')[:2]])
+
+    pairs_clustering = []
+    for l in lines_clustering:
+        pairs_clustering.append([normalizeString(s) for s in l.split('\t')[:2]])
+
 #     print(pairs)
     # random.shuffle(pairs)
 
@@ -99,7 +107,7 @@ def readLangs(lang1, lang2, reverse=False):
     # pairs_test = pairs[int(0.8*len(pairs)):]
     # pairs = pairs[:int(0.8*len(pairs))]
     # return input_lang, output_lang, pairs, pairs_test
-    return input_lang, output_lang, pairs, len(lines)
+    return input_lang, output_lang, pairs, n_train, pairs_clustering 
 
 
 # In[7]:
@@ -119,7 +127,7 @@ def filterPairs(pairs):
 
 def prepareData(lang1, lang2, reverse=False):
     # input_lang, output_lang, pairs, pairs_test = readLangs(lang1, lang2, reverse)
-    input_lang, output_lang, pairs, n_train = readLangs(lang1, lang2, reverse)
+    input_lang, output_lang, pairs, n_train, pairs_clustering = readLangs(lang1, lang2, reverse)
     print("Read %s sentence pairs" % len(pairs))
     # pairs = filterPairs(pairs)
     # print("Trimmed to %s sentence pairs" % len(pairs))
@@ -134,8 +142,8 @@ def prepareData(lang1, lang2, reverse=False):
     # pairs_test = pairs[int(0.9*len(pairs)):]
     # pairs = pairs[:int(0.9*len(pairs))]  
     pairs = pairs[:n_train]
-    pairs_test = pairs[n_train:]  
-    return input_lang, output_lang, pairs, pairs_test
+    pairs_test = pairs[n_train:]
+    return input_lang, output_lang, pairs, pairs_test, pairs_clustering
 
 
 input_lang, output_lang, pairs, pairs_test = prepareData('bias', 'unbias', reverse=False)
@@ -324,6 +332,16 @@ def evaluateAllwriteToFile(encoder, decoder):
     with open('./src/seq2seq/translated_sentences.txt','w') as f:
         text = ''
         for pair in pairs_test:
+            output_words, attentions = evaluate(encoder, decoder, pair[0])
+            output_sentence = ' '.join(output_words)
+            text+=output_sentence+'\n'
+        f.write(text)
+
+def evaluateAllwriteToFile(encoder, decoder):
+    print("Write output sentences to file ...")
+    with open('./src/seq2seq/translated_sentences_clustering.txt','w') as f:
+        text = ''
+        for pair in pairs_clustering:
             output_words, attentions = evaluate(encoder, decoder, pair[0])
             output_sentence = ' '.join(output_words)
             text+=output_sentence+'\n'
