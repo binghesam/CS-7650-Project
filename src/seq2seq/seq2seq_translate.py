@@ -75,7 +75,7 @@ def readLangs(lang1, lang2, reverse=False):
     print("Reading lines...")
 
     # Read the file and split into lines
-    lines = open('./src/dataPreprocess/%s-%s.pair' % (lang1, lang2), encoding='utf-8').        read().strip().split('\n')
+    lines = open('./src/dataPreprocess/%s-%s.pair.train' % (lang1, lang2), encoding='utf-8').        read().strip().split('\n')
 
     # Split every line into pairs and normalize
 #     pairs = [[normalizeString(s) for s in l.split('\t')] for l in lines]
@@ -499,7 +499,7 @@ hidden_size = glove_size
 encoder1 = EncoderRNN_Glove(input_lang.n_words, hidden_size, weights).to(device)
 attn_decoder1 = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
 
-trainIters(encoder1, attn_decoder1, 1000, print_every=1000,learning_rate=0.03)
+trainIters(encoder1, attn_decoder1, 100000, print_every=1000,learning_rate=0.03)
 
 
 # In[ ]:
