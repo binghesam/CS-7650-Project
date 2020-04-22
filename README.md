@@ -4,10 +4,9 @@ muti-word bias neutralization.
 ## Installation
 
 ```
-$ cd src/
+Under Project folder, do the following:
 $ python3 -m venv venv
 $ source venv/bin/activate
-$ cd ..
 $ pip install -r requirements.txt
 $ python
 >> import nltk; nltk.download("punkt")
@@ -27,8 +26,8 @@ You need download pretrained bert model.
 
 You need download pretrained GLOVE embedding.
 
-Download glove.6B.100d from <link> and put to ./src/seq2seq/
+Download (http://nlp.stanford.edu/data/wordvecs/glove.6B.zip), unzip, and put glove.6B.100d.txt to ./src/seq2seq/
 
-You need to install R and its packages "mclust" and "rjson".
+You need to install R software environment and its packages "mclust" and "rjson".
 
 
