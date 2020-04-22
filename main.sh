@@ -16,4 +16,11 @@ python ./src/detection/train.py \
 
 # clustering probabiliy vector for each
 # TO DO change to best epoch result
-Rscript ./src/clustering/clustering_BIC.R result_epoch_0.json ./scr/clustering/biased_token_idx.json
+Rscript ./src/clustering/clustering_BIC.R result_epoch_5.json ./scr/clustering/biased_token_idx.json
+
+# 1. Train seq2seq model on bias-unbias pairs and generate output
+# 2. TO DO output translated_sentences.txt and pass to strong classifier
+python ./src/seq2seq/seq2seq_translate.py
+
+
+## strong classifier to tell the translation quality

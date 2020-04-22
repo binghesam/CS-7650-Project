@@ -16,7 +16,9 @@ $ sh download_data_ckpt.sh
 
 ## Requirement
 ```
-Please make sure R is installed on your machine.
+1. Please make sure R is installed on your machine.
 
 package "mclust" and "rjson" is installed.
+
+2. Download Glove 100d from <link> and put to ./src/seq2seq/
 ```
