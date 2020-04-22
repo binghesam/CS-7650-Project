@@ -16,8 +16,8 @@ if CUDA:
     torch.cuda.set_device(ARGS.gpuid) # default 0, change it to the gpu with maximal ram
 
 
-# if not os.path.exists(ARGS.working_dir):
-#     os.makedirs(ARGS.working_dir)
+if not os.path.exists(ARGS.working_dir):
+    os.makedirs(ARGS.working_dir)
 
 # with open(ARGS.working_dir + '/command.sh', 'w') as f:
 #     f.write('python' + ' '.join(sys.argv) + '\n')
@@ -38,11 +38,53 @@ eval_dataloader, num_eval_examples = get_dataloader(
     ARGS.test,
     tok2id, ARGS.test_batch_size, test=True)
 
-model = detection_model.BertForMultitask.from_pretrained(
-    ARGS.bert_model,
-    cls_num_labels=ARGS.num_categories,
-    tok_num_labels=ARGS.num_tok_labels,
-    tok2id=tok2id)
+# # previously: no extra feature
+# model = detection_model.BertForMultitask.from_pretrained(
+#     ARGS.bert_model,
+#     cls_num_labels=ARGS.num_categories,
+#     tok_num_labels=ARGS.num_tok_labels,
+#     tok2id=tok2id)
+
+# now with extra feature
+
+# use the --xxxx and set_true to denote the selection
+print('BUILDING MODEL...')
+if ARGS.tagger_from_debiaser:
+    print("Ding -- Use Debiaser")
+    model = detection_model.TaggerFromDebiaser(
+        cls_num_labels=ARGS.num_categories, tok_num_labels=ARGS.num_tok_labels,
+        tok2id=tok2id)
+
+elif ARGS.extra_features_top:
+    # used in the train processing
+    print("Ding -- Use extra_features_top")
+    model = detection_model.BertForMultitaskWithFeaturesOnTop.from_pretrained(
+            ARGS.bert_model,
+            cls_num_labels=ARGS.num_categories,
+            tok_num_labels=ARGS.num_tok_labels,
+            cache_dir=ARGS.working_dir + '/cache',
+            tok2id=tok2id)
+elif ARGS.extra_features_bottom:
+    print("Ding -- Use extra_features_bottom")
+    # by checking, no this module at all
+    # multi-task is the basic model with no other features: just multi task setting
+    model = detection_model.BertForMultitaskWithFeaturesOnBottom.from_pretrained(
+            ARGS.bert_model,
+            cls_num_labels=ARGS.num_categories,
+            tok_num_labels=ARGS.num_tok_labels,
+            cache_dir=ARGS.working_dir + '/cache',
+            tok2id=tok2id)
+else:
+    # by testing and find without the category and other info, only multi-task is used
+    # the categories info is just given in case, no other use!
+    print("Ding -- Use BertForMultitask")
+    model = detection_model.BertForMultitask.from_pretrained(
+        ARGS.bert_model,
+        cls_num_labels=ARGS.num_categories,
+        tok_num_labels=ARGS.num_tok_labels,
+        cache_dir=ARGS.working_dir + '/cache',
+        tok2id=tok2id)
+
 
 if CUDA:
     model = model.cuda()
