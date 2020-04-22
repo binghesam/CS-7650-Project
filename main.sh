@@ -18,6 +18,8 @@ python ./src/detection/train.py \
 # TO DO change to best epoch result
 Rscript ./src/clustering/clustering_BIC.R result_epoch_5.json ./scr/clustering/biased_token_idx.json
 
+# 0 first downl download the glov dataset wget http://nlp.stanford.edu/data/wordvecs/glove.6B.zip
+# 0.5 unzip glove.6B.zip and place it in the src/seq2seq/ and baseline/ folder
 # 1. Train seq2seq model on bias-unbias pairs and generate output
 # 2. TO DO output translated_sentences.txt and pass to strong classifier
 python ./src/seq2seq/seq2seq_translate.py
