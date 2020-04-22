@@ -9,13 +9,10 @@ from pytorch_pretrained_bert.optimization import BertAdam
 import torch.optim as optim
 
 import sys; sys.path.append('.')
-CUDA = (torch.cuda.device_count() > 1)
+from shared.args import ARGS
+from shared.constants import CUDA
 
-sys.path.append('./../../')
-sys.path.append('./../../src')
-sys.path.append('./../../src/detection')
-from src.detection.args import ARGS
-from src.detection.data import get_dataloader
+
 
 #############################################################
 def bleu_stats(hypothesis, reference):
@@ -198,17 +195,17 @@ def dump_outputs(src_ids, gold_ids, predicted_ids, gold_tok_dist, id2tok, out_fi
         gold_seq = ' '.join(gold_seq).replace('[PAD]', '').strip()
         pred_seq = ' '.join(pred_seq).replace('[PAD]', '').strip()
 
-        try:
-            print('#' * 80, file=out_file)
-            print('IN SEQ: \t', src_seq.encode('utf-8'), file=out_file)
-            print('GOLD SEQ: \t', gold_seq.encode('utf-8'), file=out_file)
-            print('PRED SEQ:\t', pred_seq.encode('utf-8'), file=out_file)
-            print('GOLD DIST: \t', list(gold_dist), file=out_file)
-            print('PRED DIST: \t', list(pred_dist), file=out_file)
-            print('GOLD TOK: \t', list(gold_replace), file=out_file)
-            print('PRED TOK: \t', list(pred_replace), file=out_file)
-        except UnicodeEncodeError:
-            pass
+        # try:
+        print('#' * 80, file=out_file)
+        print('IN SEQ: \t', src_seq.encode('utf-8'), file=out_file)
+        print('GOLD SEQ: \t', gold_seq.encode('utf-8'), file=out_file)
+        print('PRED SEQ:\t', pred_seq.encode('utf-8'), file=out_file)
+        print('GOLD DIST: \t', list(gold_dist), file=out_file)
+        print('PRED DIST: \t', list(pred_dist), file=out_file)
+        print('GOLD TOK: \t', list(gold_replace), file=out_file)
+        print('PRED TOK: \t', list(pred_replace), file=out_file)
+        # except UnicodeEncodeError:
+        #     pass
 
         if gold_seq == pred_seq:
             out_hits.append(1)
@@ -263,10 +260,6 @@ def run_eval(model, dataloader, tok2id, out_file_path, max_seq_len, beam_width=1
             predicted_toks, 
             pre_tok_label_id.detach().cpu().numpy(), 
             id2tok, out_file)
-        # bing out put: the output from the list by setting
-        # print(new_preds)
-
-
         hits += new_hits
         preds += new_preds
         golds += new_golds

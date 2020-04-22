@@ -2,8 +2,9 @@
 
 """
 this code just uses the current biase.full.train to first
-(1) generate the biased.full.test : the data path: pair_sent_file_path = "./biased.full.train"
-(2) run and test the previous
+(1) use the biased.full.train train to generate the bias-unbias.pair  the data path: pair_sent_file_path = "./biased.full.train"
+(2) use  bias-unbias.pair to train the model and run the testing: finally it generate the text
+(3) then final generated file is a sentence with generated whole words
 seq2seq model for training and testing
 
 sample command: python seq2seq_baseline.py

@@ -4,37 +4,40 @@
 # run minimal job:
 # python seq2seq/train.py --train ../../data/v6/corpus.wordbiased.tag.train --test ../../data/v6/corpus.wordbiased.tag.test --working_dir TEST --max_seq_len 15 --train_batch_size 3 --test_batch_size 10  --hidden_size 32 --debug_skip
 
-
-
+from collections import defaultdict
+from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
+from tqdm import tqdm
+import os
 import torch
 from pytorch_pretrained_bert.tokenization import BertTokenizer
+from simplediff import diff
+import pickle
 from tensorboardX import SummaryWriter
+import torch.optim as optim
+import torch.nn as nn
 import numpy as np
+from collections import Counter
+import math
+import functools
+
+from pytorch_pretrained_bert.modeling import BertEmbeddings
 
 import model as seq2seq_model
 
 import sys; sys.path.append('.')
-
-sys.path.append('./../../')
-sys.path.append('./../../src')
-sys.path.append('./../../src/detection')
-from src.detection.args import ARGS
-from src.detection.data import get_dataloader
-
-
-CUDA = (torch.cuda.device_count() > 1)
-if CUDA:
-    torch.cuda.set_device(ARGS.gpuid) # default 0, change it to the gpu with maximal ram
+from shared.args import ARGS
+from shared.data import get_dataloader
+from shared.constants import CUDA
 
 import utils
 
 BERT_MODEL = "bert-base-uncased"
 
-# if not os.path.exists(ARGS.working_dir):
-#     os.makedirs(ARGS.working_dir)
+if not os.path.exists(ARGS.working_dir):
+    os.makedirs(ARGS.working_dir)
 
-# with open(ARGS.working_dir + '/command.sh', 'w') as f:
-#     f.write('python' + ' '.join(sys.argv) + '\n')
+with open(ARGS.working_dir + '/command.sh', 'w') as f:
+    f.write('python' + ' '.join(sys.argv) + '\n')
 
 if ARGS.bert_encoder:
     TRAIN_BATCH_SIZE = 16
@@ -45,7 +48,7 @@ else:
 
 
 # # # # # # # # ## # # # ## # # DATA # # # # # # # # ## # # # ## # #
-tokenizer = BertTokenizer.from_pretrained(BERT_MODEL) # , cache_dir=ARGS.working_dir + '/cache'
+tokenizer = BertTokenizer.from_pretrained(BERT_MODEL, cache_dir=ARGS.working_dir + '/cache')
 tok2id = tokenizer.vocab
 tok2id['<del>'] = len(tok2id)
 
@@ -53,18 +56,17 @@ tok2id['<del>'] = len(tok2id)
 if ARGS.pretrain_data:
     pretrain_dataloader, num_pretrain_examples = get_dataloader(
         ARGS.pretrain_data,
-        tok2id, TRAIN_BATCH_SIZE,
-        test=True,
-        noise=True) # , ARGS.working_dir + '/pretrain_data.pkl'
+        tok2id, TRAIN_BATCH_SIZE, ARGS.working_dir + '/pretrain_data.pkl',
+        noise=True)
 
 train_dataloader, num_train_examples = get_dataloader(
     ARGS.train,
-    tok2id, TRAIN_BATCH_SIZE,
-    add_del_tok=ARGS.add_del_tok) # ARGS.working_dir + '/train_data.pkl',
+    tok2id, TRAIN_BATCH_SIZE, ARGS.working_dir + '/train_data.pkl',
+    add_del_tok=ARGS.add_del_tok)
 eval_dataloader, num_eval_examples = get_dataloader(
     ARGS.test,
-    tok2id, TEST_BATCH_SIZE,
-    test=True, add_del_tok=ARGS.add_del_tok) # ARGS.working_dir + '/test_data.pkl',
+    tok2id, TEST_BATCH_SIZE, ARGS.working_dir + '/test_data.pkl',
+    test=True, add_del_tok=ARGS.add_del_tok)
 
 
 # # # # # # # # ## # # # ## # # MODELS # # # # # # # # ## # # # ## # #
@@ -111,7 +113,7 @@ if ARGS.pretrain_data:
         writer.add_scalar('pretrain/loss', np.mean(losses), epoch)
 
     print('SAVING DEBIASER...')
-    # torch.save(model.state_dict(), ARGS.working_dir + '/debiaser.ckpt')
+    torch.save(model.state_dict(), ARGS.working_dir + '/debiaser.ckpt')
 
 # # # # # # # # # # # # TRAINING # # # # # # # # # # # # # #
 
@@ -123,20 +125,13 @@ for epoch in range(ARGS.epochs):
     writer.add_scalar('train/loss', np.mean(losses), epoch+1)
 
     print('SAVING...')
-    # model.save(ARGS.working_dir + '/model_%d.ckpt' % (epoch+1))
+    model.save(ARGS.working_dir + '/model_%d.ckpt' % (epoch+1))
 
     print('EVAL...')
     model.eval()
     hits, preds, golds, srcs = utils.run_eval(
-        model, eval_dataloader, tok2id, 'seq_results_%d.txt' % epoch,
-        ARGS.max_seq_len, ARGS.beam_width) # ARGS.working_dir + '/results_%d.txt' % epoch to the current directory
+        model, eval_dataloader, tok2id, ARGS.working_dir + '/results_%d.txt' % epoch,
+        ARGS.max_seq_len, ARGS.beam_width)
     # writer.add_scalar('eval/partial_bleu', utils.get_partial_bleu(preds, golds, srcs), epoch+1)
-    # writer.add_scalar('eval/bleu', utils.get_bleu(preds, golds), epoch+1)
-    # writer.add_scalar('eval/true_hits', np.mean(hits), epoch+1)
-    # out put setting by bing:
-    with open("conc_result.txt", "w", encoding="utf-8") as f:
-        for pred in preds:
-            pred_string = " ".join(pred)
-            f.write(pred_string + "\n")
-
-
+    writer.add_scalar('eval/bleu', utils.get_bleu(preds, golds), epoch+1)
+    writer.add_scalar('eval/true_hits', np.mean(hits), epoch+1)
