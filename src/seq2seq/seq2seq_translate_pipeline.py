@@ -146,7 +146,7 @@ def prepareData(lang1, lang2, reverse=False):
     return input_lang, output_lang, pairs, pairs_test, pairs_clustering
 
 
-input_lang, output_lang, pairs, pairs_test = prepareData('bias', 'unbias', reverse=False)
+input_lang, output_lang, pairs, pairs_test,  pairs_clustering = prepareData('bias', 'unbias', reverse=False)
 print(random.choice(pairs))
 
 
