@@ -25,7 +25,7 @@ import time
 import math
 import numpy as np
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device("cuda:3" if torch.cuda.is_available() else "cpu")
 MAX_LENGTH = 100
 
 #### bing adding
@@ -310,6 +310,7 @@ def trainIters(encoder, decoder, n_iters, print_every=1000, plot_every=100, lear
         plot_loss_total += loss
 
         if iter % print_every == 0:
+            print("%d iteration:"%(iter))
             print_loss_avg = print_loss_total / print_every
             print_loss_total = 0
             print('%s (%d %d%%) %.4f' % (timeSince(start, iter / n_iters),
@@ -459,7 +460,7 @@ hidden_size = glove_size
 encoder1 = EncoderRNN_Glove(input_lang.n_words, hidden_size, weights).to(device)
 attn_decoder1 = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
 
-trainIters(encoder1, attn_decoder1, n_iters = 2, print_every=1000, learning_rate=0.03)
+trainIters(encoder1, attn_decoder1, n_iters = 100, print_every=1000, learning_rate=0.03)
 
 
 
