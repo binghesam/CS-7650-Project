@@ -14,7 +14,7 @@
 python ./src/detection/train.py \
  --train ./data/biased.full.filtered.train \
  --test ./data/biased.full.filtered.test \
- --extra_features_top --pre_enrich --activation_hidden --category_input \
+ --extra_features_top --pre_enrich --activation_hidden \
  --learning_rate 0.0003 \
  --epochs 6 \
  --hidden_size 512 \
