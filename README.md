@@ -14,3 +14,9 @@ $ python
 $ sh download_data_ckpt.sh
 ```
 
+## Requirement
+```
+Please make sure R is installed on your machine.
+
+package "mclust" and "rjson" is installed.
+```

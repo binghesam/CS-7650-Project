@@ -51,9 +51,10 @@ clustering = function(x) {
 # read json file
 print("Reading json file...")
 args = commandArgs(trailingOnly=TRUE)
-args = './result_epoch_4.json'
+print(args)
+# args = './result_epoch_4.json'
 # args = '/Users/roib/Downloads/neutralizing-bias/src/result_epoch_4.json'
-tagger_output <- fromJSON(file=args)
+tagger_output <- fromJSON(file=args[1])
 # calculate clustering index for each probability vector
 print('Calculate idx of cluster with highest probability...')
 idx_list = lapply(tagger_output$tok_probs, function(x) clustering(x))
