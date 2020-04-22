@@ -10,5 +10,5 @@ with open('./cluster_words.txt') as f:
 with open('./cluster_words_cleaned.txt','w') as f:
     text = ''
     for line in biased_phrase:
-        text+=line+"\n"
+        text+=line
     f.write(text)

@@ -15,5 +15,6 @@ with open(output_file, 'w') as f:
             f.write(" ".join([tokens[id-1] for id in clus_words]))
         else: # clus_words is a number
             f.write(tokens[clus_words-1])
+        f.write('\n')
 
 print("finish the transfer.")
