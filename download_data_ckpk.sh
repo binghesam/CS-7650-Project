@@ -1,0 +1,2 @@
+wget http://nlp.stanford.edu/projects/bias/bias_data.zip
+unzip bias_data.zip
