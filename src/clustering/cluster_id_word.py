@@ -2,7 +2,7 @@ import json
 
 tok_prob = './src/detection/diyi2/neutralizing-bias2April13/src/final_result.json'
 clus_id = './src/clustering/biased_token_idx.json'
-output_file = './src/clusteirng/cluster_words.txt'
+output_file = './src/clustering/cluster_words.txt'
 with open(tok_prob) as f1, open(clus_id) as f2:
     tok_words = json.load(f1)["input_toks"]
     clus_res = json.load(f2)
