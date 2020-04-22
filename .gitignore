@@ -109,4 +109,3 @@ venv.bak/
 .mypy_cache/
 src/dataPreprocess/biased.full
 src/strongClassifier/pybert/pretrain/bert/base-uncased/pytorch_model.bin
-glove.6B.100d.txt

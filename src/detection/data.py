@@ -10,7 +10,9 @@ from random import shuffle
 import random
 from collections import defaultdict
 
-import sys;sys.path.append('.')
+import sys;
+
+sys.path.append('.')
 from args import ARGS
 
 # from https://spacy.io/api/annotation#section-dependency-parsing
