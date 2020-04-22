@@ -51,7 +51,7 @@ Rscript ./src/clustering/clustering_BIC.R ./src/detection/diyi2/neutralizing-bia
 # 0.5 unzip glove.6B.zip and place it in the src/seq2seq/ and baseline/ folder
 # 1. Train seq2seq model on bias-unbias pairs and generate output
 # 2. TO DO output translated_sentences.txt and pass to strong classifier
-python ./src/seq2seq/seq2seq_translate.py
+python ./src/seq2seq/seq2seq_translate_pipeline.py
 
 
 ## strong classifier to tell the translation quality
