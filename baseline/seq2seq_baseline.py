@@ -31,7 +31,9 @@ MAX_LENGTH = 100
 #### bing adding
 # parameter:
 # filter to have sentence length smaller than 50
-def dataformat2seqmodel(pair_sent_file_path, pair_phrase_file_path="./%s-%s.pair"%('bias', 'unbias'),
+def dataformat2seqmodel(pair_sent_file_path,
+                        pair_sent_file_path_val_test,
+                        pair_phrase_file_path="./%s-%s.pair"%('bias', 'unbias'),
                         min_length = 100):
     pairs_full = []
     with open(pair_sent_file_path) as f:
@@ -39,7 +41,15 @@ def dataformat2seqmodel(pair_sent_file_path, pair_phrase_file_path="./%s-%s.pair
             items = re.sub(' ##','',line).split('\t')
             if len(items[1].split())< min_length:
                 pairs_full.append((items[1],items[2]))
+    num_train = len(pairs_full)
     print('len(pairs_full)',len(pairs_full))
+
+    with open(pair_sent_file_path_val_test) as f:
+        for line in f:
+            items = re.sub(' ##', '', line).split('\t')
+            if len(items[1].split()) < min_length:
+                pairs_full.append((items[1], items[2]))
+
 
     # write to file for translation
     with open(pair_phrase_file_path,'w') as f:
@@ -47,6 +57,7 @@ def dataformat2seqmodel(pair_sent_file_path, pair_phrase_file_path="./%s-%s.pair
         for a, b in pairs_full:
             text += a + '\t' + b + '\n'
         f.write(text)
+    return num_train
 
 
 # data_file = './%s-%s.pair' # pair \t pair structure, then runt the seq2seq model
@@ -121,7 +132,7 @@ def filterPair(p):
 def filterPairs(pairs):
     return [pair for pair in pairs if filterPair(pair)]
 
-def prepareData(lang1, lang2, reverse=False):
+def prepareData(lang1, lang2, num_train,reverse=False):
     # input_lang, output_lang, pairs, pairs_test = readLangs(lang1, lang2, reverse)
     input_lang, output_lang, pairs = readLangs(lang1, lang2, reverse)
     print("Read %s sentence pairs" % len(pairs))
@@ -135,8 +146,12 @@ def prepareData(lang1, lang2, reverse=False):
     print(input_lang.name, input_lang.n_words)
     print(output_lang.name, output_lang.n_words)
 
-    pairs_test = pairs[int(0.9*len(pairs)):]
-    pairs = pairs[:int(0.9*len(pairs))]
+    # # prev split
+    # pairs_test = pairs[int(0.9*len(pairs)):]
+    # pairs = pairs[:int(0.9*len(pairs))]
+    # now setting
+    pairs = pairs[:num_train]
+    pairs_test = pairs[num_train:]
     return input_lang, output_lang, pairs, pairs_test
 
 class EncoderRNN(nn.Module):
@@ -360,7 +375,7 @@ def timeSince(since, percent):
 
 def evaluateAllwriteToFile(encoder, decoder):
     print("Write output sentences to file ...")
-    with open('./translated_sentences.txt','w') as f:
+    with open('./seq2seq_result.txt','w') as f:
         text = ''
         #  this pairs_test is from the original data split of the whole data
         #  afer %s-%s file, we can have this: pairs_test
@@ -391,10 +406,12 @@ def evaluateRandomlyStats(encoder, decoder, n=10):
 SOS_token = 0
 EOS_token = 1
 
-pair_sent_file_path = "./biased.full.train"
-dataformat2seqmodel(pair_sent_file_path)
+pair_sent_file_path = "./biased.full.filtered.train"
+pair_sent_file_path_val_test = "./biased.full.filtered.test"
+num_train = dataformat2seqmodel(pair_sent_file_path, pair_sent_file_path_val_test)
 # Lowercase, trim, and remove non-letter characters
-input_lang, output_lang, pairs, pairs_test = prepareData('bias', 'unbias', reverse=False)
+input_lang, output_lang, pairs, pairs_test = prepareData('bias', 'unbias',
+                                                         num_train = num_train,reverse=False)
 print(random.choice(pairs))
 teacher_forcing_ratio = 0
 
