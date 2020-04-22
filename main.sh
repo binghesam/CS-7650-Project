@@ -45,8 +45,11 @@ cd ../../../../..
 
 # clustering probabiliy vector for each
 # TO DO change to best epoch result
-Rscript ./src/clustering/clustering_BIC.R ./src/detection/diyi2/neutralizing-bias2April13/src/final_result.json ./scr/clustering/biased_token_idx.json
-
+cd ./src/clustering/
+Rscript clustering_BIC.R ../detection/diyi2/neutralizing-bias2April13/src/final_result.json ./biased_token_idx.json
+python cluster_id_word.py
+python clean_cluster_words.py
+cd ../..
 # 0 first downl download the glov dataset wget http://nlp.stanford.edu/data/wordvecs/glove.6B.zip
 # 0.5 unzip glove.6B.zip and place it in the src/seq2seq/ and baseline/ folder
 # 1. Train seq2seq model on bias-unbias pairs and generate output
