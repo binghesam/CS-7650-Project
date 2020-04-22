@@ -9,11 +9,11 @@ require(rjson)
 # choose optimal number of clusters
 
 clustering = function(x) {
-  # print(x)
+  print(x)
   # input: x, a vector of probability
   # return: idx, indices of clusters with highest probabilities
   clust = densityMclust(x)
-  ?densityMclust
+  # ?densityMclust
   # plot(clust)
   ## obtain cluster idx of max probability
   idx_max = which.max(x)
