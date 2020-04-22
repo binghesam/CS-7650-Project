@@ -28,6 +28,7 @@ python ./src/seq2seq/seq2seq_translate.py
 ## strong classifier to tell the translation quality
 cd ./src/strongClassifier/
 ## Preprocess data
+# if necessary pip install transformers
 python run_bert.py --do_data 
 ## Run classifier
 python run_bert.py --do_train --save_best --do_lower_case

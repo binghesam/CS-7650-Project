@@ -14,9 +14,15 @@ $ python
 ```
 You need download pretrained bert model.
 
-1. Download the Bert pretrained model from [s3](https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-pytorch_model.bin) 
-2. Download the Bert config file from [s3](https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-config.json) 
-3. Download the Bert vocab file from [s3](https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-vocab.txt) 
+1. Download the Bert pretrained model from [s3](https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-pytorch_model.bin)
+1.1 wget https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-pytorch_model.bin
+1.2 mv bert-base-uncased-pytorch_model.bin pytorch_model.bin
+2. Download the Bert config file from [s3](https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-config.json)
+2.1 wget https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-config.json
+2.2 mv bert-base-uncased-config.json config.json
+3. Download the Bert vocab file from [s3](https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-vocab.txt)
+3.1 wget https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-vocab.txt
+3.2 mv bert-base-uncased-vocab.txt bert_vocab.txt
 4. Rename:
     - `bert-base-uncased-pytorch_model.bin` to `pytorch_model.bin`
     - `bert-base-uncased-config.json` to `config.json`
