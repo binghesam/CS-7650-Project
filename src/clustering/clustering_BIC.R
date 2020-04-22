@@ -9,7 +9,7 @@ require(rjson)
 # choose optimal number of clusters
 
 clustering = function(x) {
-  # print(x)
+  print(x)
   # input: x, a vector of probability
   # return: idx, indices of clusters with highest probabilities
   clust = densityMclust(x)
@@ -63,4 +63,4 @@ idx_list = lapply(tagger_output$tok_probs, function(x) clustering(x))
 print("Write result to json...")
 jsonData = toJSON(idx_list)
 # write(jsonData, "/Users/roib/Downloads/output.json") 
-write(jsonData, file=args[2])
+write(jsonData, "./src/clustering/biased_token_idx.json")
