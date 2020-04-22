@@ -9,3 +9,6 @@ mwparserfromhell
 python-Levenshtein
 autocorrect
 future
+transformers
+matplotlib
+pandas
