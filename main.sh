@@ -30,7 +30,7 @@ cd ./src/strongClassifier/
 ## Preprocess data
 # if necessary pip install transformers
 python run_bert.py --do_data 
-## Run classifier
+## Run classifier, add --n_gpu num if necessary to choose the gpu id
 python run_bert.py --do_train --save_best --do_lower_case
 
 cd ../..
