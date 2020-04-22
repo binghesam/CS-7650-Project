@@ -24,15 +24,11 @@ You need download pretrained bert model.
     - `bert-base-uncased-config.json` to `config.json`
     - `bert-base-uncased-vocab.txt` to `bert_vocab.txt`
 5. Place `model` ,`config` and `vocab` file into  the `./src/strongClassifier/pybert/pretrain/bert/base-uncased` directory.
-6. `pip install pytorch-transformers` from [github](https://github.com/huggingface/pytorch-transformers).
 
+You need download pretrained GLOVE embedding.
 
-## Requirement
-```
-1. Please make sure R is installed on your machine.
+Download glove.6B.100d from <link> and put to ./src/seq2seq/
 
-package "mclust" and "rjson" is installed.
+You need to install R and its packages "mclust" and "rjson".
 
-2. Download glove.6B.100d from <link> and put to ./src/seq2seq/
-```
 
