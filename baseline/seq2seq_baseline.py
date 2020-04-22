@@ -300,6 +300,7 @@ def trainIters(encoder, decoder, n_iters, print_every=1000, plot_every=100, lear
     criterion = nn.NLLLoss()
 
     for iter in range(1, n_iters + 1):
+        print("iters is: %d"%(iter))
         training_pair = training_pairs[iter - 1]
         input_tensor = training_pair[0]
         target_tensor = training_pair[1]
