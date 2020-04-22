@@ -16,4 +16,4 @@ python ./src/detection/train.py \
 
 # clustering probabiliy vector for each
 # TO DO change to best epoch result
-Rscript Rscript --vanilla ./src/clustering/clustering_BIC.R result_epoch_0.json biased_token_idx.json
+Rscript ./src/clustering/clustering_BIC.R result_epoch_0.json biased_token_idx.json
