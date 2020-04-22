@@ -35,7 +35,7 @@ python ./src/detection/diyi/neutralizing-bias-master/src/tagging/train.py \
 --test ./data/biased.full.filtered.test\
 --categories_file ./data/revision_topics.csv \
 --extra_features_top --pre_enrich --activation_hidden --category_input \
---learning_rate 0.0003 --epochs 20 --hidden_size 512 --train_batch_size 32 \
+--learning_rate 0.0003 --epochs 6 --hidden_size 512 --train_batch_size 32 \
 --test_batch_size 16 --debias_weight 1.3 --working_dir train_tagging/
 
 # generate the json after processing
