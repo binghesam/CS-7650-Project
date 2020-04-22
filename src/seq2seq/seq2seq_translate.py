@@ -318,7 +318,7 @@ def trainIters(encoder, decoder, n_iters, print_every=1000, plot_every=100, lear
 
 def evaluateAllwriteToFile(encoder, decoder):
     print("Write output sentences to file ...")
-    with open('./translated_sentences.txt','w') as f:
+    with open('./src/seq2seq/translated_sentences.txt','w') as f:
         text = ''
         for pair in pairs_test:
             output_words, attentions = evaluate(encoder, decoder, pair[0])
@@ -352,6 +352,7 @@ def evaluateRandomlyStats(encoder, decoder, n=10):
 
 
 # prepare glove 1
+print("Reading GLOVE embedding...")
 import numpy as np
 words = []
 word2idx = {}
