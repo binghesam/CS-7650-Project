@@ -46,7 +46,7 @@ cd ../../../../..
 # clustering probabiliy vector for each
 # TO DO change to best epoch result
 cd ./src/clustering/
-Rscript clustering_BIC.R ../detection/diyi2/neutralizing-bias2April13/src/final_result.json ./biased_token_idx.json
+Rscript clustering_BIC.R ../detection/diyi2/neutralizing-bias2April13/src/final_result.json
 python cluster_id_word.py
 python clean_cluster_words.py
 cd ../..
