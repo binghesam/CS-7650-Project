@@ -358,7 +358,7 @@ word2idx = {}
 vectors = []
 
 glove_size = 100
-with open(f'./glove.6B.{glove_size}d.txt', 'rb') as f:
+with open(f'./src/seq2seq/glove.6B.{glove_size}d.txt', 'rb') as f:
     for idx,l in enumerate(f):
         line = l.decode().split()
         word = line[0]

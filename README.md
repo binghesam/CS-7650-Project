@@ -20,5 +20,5 @@ $ sh download_data_ckpt.sh
 
 package "mclust" and "rjson" is installed.
 
-2. Download Glove 100d from <link> and put to ./src/seq2seq/
+2. Download glove.6B.100d from <link> and put to ./src/seq2seq/
 ```
