@@ -76,7 +76,7 @@ def readLangs(lang1, lang2, reverse=False):
 
     # Read the file and split into lines
     lines = open('./src/dataPreprocess/%s-%s.pair.train' % (lang1, lang2), encoding='utf-8').        read().strip().split('\n')
-    print('len(lines)',lines)
+    print('len(lines)',len(lines))
     n_train = len(lines)
     lines_test = open('./src/dataPreprocess/%s-%s.pair.test' % (lang1, lang2), encoding='utf-8').        read().strip().split('\n')
     print('len(lines_test)',len(lines_test))
@@ -87,8 +87,10 @@ def readLangs(lang1, lang2, reverse=False):
     pairs = []
     for l in lines:
         pairs.append([normalizeString(s) for s in l.split('\t')[:2]])
+    print('len(pairs)',len(pairs))
     for l in lines_test:
         pairs.append([normalizeString(s) for s in l.split('\t')[:2]])
+    print('len(pairs) after append',len(pairs))
 
     pairs_clustering = []
     for l in lines_clustering:
