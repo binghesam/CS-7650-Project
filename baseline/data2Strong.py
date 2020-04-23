@@ -4,8 +4,9 @@ import re
 import matplotlib.pyplot as plt
 import pickle
 
-generated_sent_file_path = "./concurrent/concurrent_result_Apri230101.txt" # conc_result.txt  translated_sentences
+# generated_sent_file_path = "./concurrent/concurrent_result_Apri230101.txt" # conc_result.txt  translated_sentences
 
+generated_sent_file_path = "./seq2seq_result_April23.txt" # conc_result.txt  translated_sentences
 
 sents = []
 with open(generated_sent_file_path) as f:
