@@ -150,8 +150,12 @@ def prepareData(lang1, lang2, num_train,reverse=False):
     # pairs_test = pairs[int(0.9*len(pairs)):]
     # pairs = pairs[:int(0.9*len(pairs))]
     # now setting
-    pairs = pairs[:num_train]
+
     pairs_test = pairs[num_train:]
+    pairs = pairs[:num_train]
+    print("training data is %d"%len(pairs))
+    print("testing data is %d"%len(pairs_test))
+
     return input_lang, output_lang, pairs, pairs_test
 
 class EncoderRNN(nn.Module):
