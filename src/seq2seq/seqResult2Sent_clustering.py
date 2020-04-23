@@ -3,7 +3,7 @@ import json
 # we need three files, 1. generated seq phrases 2. the tagging result with tokens 3. the clustering result
 seq_result = './translated_sentences_clustering.txt' # each translation per line
 tagging_json = '../detection/diyi2/neutralizing-bias2April13/src/epoch_7_result.json' # result from the tagging
-clus_id = './biased_token_idx.json' # result from the clustering
+clus_id = '../clustering/biased_token_idx.json' # result from the clustering
 
 output_file = './seq2sentInTestingClustering.txt'
 
