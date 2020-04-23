@@ -328,7 +328,11 @@ def trainIters(encoder, decoder, n_iters, print_every=1000, plot_every=100, lear
             print_loss_total = 0
             print('%s (%d %d%%) %.4f' % (timeSince(start, iter / n_iters),
                                          iter, iter / n_iters * 100, print_loss_avg))
+            print("eval test set...")
             evaluateRandomly(encoder, decoder, n=5)
+            print("eval test clustering")
+            evaluateRandomlyClustering(encoder, decoder, n=5)
+
     evaluateAllwriteToFile(encoder, decoder)
     evaluateAllwriteToFileClustering(encoder, decoder)
 #             print('eval: ',evaluateRandomlyStats(encoder, decoder, n=1000))
@@ -349,7 +353,7 @@ def evaluateAllwriteToFile(encoder, decoder):
         f.write(text)
 
 def evaluateAllwriteToFileClustering(encoder, decoder):
-    print("Write output sentences to file ...")
+    print("Write output sentences to file clustering part...")
     with open('./src/seq2seq/translated_sentences_clustering.txt','w') as f:
         text = ''
         for pair in pairs_clustering:
@@ -521,6 +525,15 @@ def evaluateRandomly(encoder, decoder, n=10):
         print('<', output_sentence)
         print('')
 
+def evaluateRandomlyClustering(encoder, decoder, n=10):
+    for i in range(n):
+        pair = random.choice(pairs_clustering)
+        print('>', pair[0])
+        print('=', pair[1])
+        output_words, attentions = evaluate(encoder, decoder, pair[0])
+        output_sentence = ' '.join(output_words)
+        print('<', output_sentence)
+        print('')
 
 # In[30]:
 
