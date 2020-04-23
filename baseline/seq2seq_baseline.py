@@ -380,7 +380,7 @@ def timeSince(since, percent):
 
 def evaluateAllwriteToFile(encoder, decoder):
     print("Write output sentences to file ...")
-    with open('./seq2seq_result.txt','w') as f:
+    with open('./seq2seq_result_1000iteration.txt','w') as f:
         text = ''
         #  this pairs_test is from the original data split of the whole data
         #  afer %s-%s file, we can have this: pairs_test
@@ -464,8 +464,8 @@ hidden_size = glove_size
 encoder1 = EncoderRNN_Glove(input_lang.n_words, hidden_size, weights).to(device)
 attn_decoder1 = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
 
-trainIters(encoder1, attn_decoder1, n_iters = 100, print_every=1000, learning_rate=0.03)
-
+trainIters(encoder1, attn_decoder1, n_iters = 100000, print_every=1000, learning_rate=0.03)
+print("finish the whole seq2seq")
 
 
 
