@@ -16,5 +16,5 @@ with open(output_file, 'w') as f:
         else: # clus_words is a number
             f.write(tokens[clus_words-1])
         f.write('\n')
-
+    print('len(clus_res)',len(clus_res))
 print("finish the transfer.")
