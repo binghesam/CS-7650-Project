@@ -143,6 +143,9 @@ def prepareData(lang1, lang2, reverse=False):
     # pairs = pairs[:int(0.9*len(pairs))]  
     pairs = pairs[:n_train]
     pairs_test = pairs[n_train:]
+    print('len(pairs)',len(pairs))
+    print('len(pairs_test)',len(pairs_test))
+    print('len(pairs_clustering)',len(pairs_clustering))
     return input_lang, output_lang, pairs, pairs_test, pairs_clustering
 
 
@@ -320,6 +323,7 @@ def trainIters(encoder, decoder, n_iters, print_every=1000, plot_every=100, lear
                                          iter, iter / n_iters * 100, print_loss_avg))
             evaluateRandomly(encoder, decoder, n=5)
     evaluateAllwriteToFile(encoder, decoder)
+    evaluateAllwriteToFileClustering(encoder, decoder)
 #             print('eval: ',evaluateRandomlyStats(encoder, decoder, n=1000))
     
 
@@ -337,7 +341,7 @@ def evaluateAllwriteToFile(encoder, decoder):
             text+=output_sentence+'\n'
         f.write(text)
 
-def evaluateAllwriteToFile(encoder, decoder):
+def evaluateAllwriteToFileClustering(encoder, decoder):
     print("Write output sentences to file ...")
     with open('./src/seq2seq/translated_sentences_clustering.txt','w') as f:
         text = ''
