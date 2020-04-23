@@ -1,7 +1,6 @@
 python python train.py \
- --train ../biased.full.train --test \
- ../biased.full.test   \
- --debias_weight 1.3  \
+ --train ../biased.full.filtered.train \
+ --test  ../biased.full.filtered.test  \
  --no_tok_enrich \
- --epochs 2 \
+ --epochs 20 \
  --working_dir baseline_result_concurrent/
