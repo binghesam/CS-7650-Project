@@ -1,6 +1,6 @@
 import json
 
-tok_prob = '../detection/diyi2/neutralizing-bias2April13/src/final_result.json'
+tok_prob = '../detection/diyi2/neutralizing-bias2April13/src/epoch_5_result.json'
 clus_id = './biased_token_idx.json'
 output_file = './cluster_words.txt'
 with open(tok_prob) as f1, open(clus_id) as f2:
