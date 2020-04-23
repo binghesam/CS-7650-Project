@@ -126,11 +126,17 @@ for epoch in range(ARGS.epochs):
     print('EVAL...')
     model.eval()
     results = tagging_utils.run_inference(model, eval_dataloader, loss_fn, tokenizer)
+    ## capture results
+    json_string = json.dumps({"tok_probs": results["tok_probs"], "input_toks": results["input_toks"]})
+    with open("epoch_%d_result.json"%epoch, 'w') as f:
+        f.write(json_string)
+    ## added lines to capture the results
     writer.add_scalar('eval/tok_loss', np.mean(results['tok_loss']), epoch + 1)
     writer.add_scalar('eval/tok_acc', np.mean(results['labeling_hits']), epoch + 1)
 
-    model.train()
 
+
+    model.train()
     print('SAVING...')
     torch.save(model.state_dict(), ARGS.working_dir + '/model_%d.ckpt' % epoch)    
     
