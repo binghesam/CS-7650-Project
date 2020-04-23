@@ -147,7 +147,7 @@ def prepareData(lang1, lang2, reverse=False):
     # pairs_test = pairs[int(0.9*len(pairs)):]
     # pairs = pairs[:int(0.9*len(pairs))]  
     pairs = pairs[:n_train]
-    pairs_test = pairs[n_train:]
+    pairs_test = pairs[n_train:len(pairs)]
     print('len(pairs)',len(pairs))
     print('len(pairs_test)',len(pairs_test))
     print('len(pairs_clustering)',len(pairs_clustering))
