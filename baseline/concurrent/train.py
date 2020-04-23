@@ -134,9 +134,10 @@ for epoch in range(ARGS.epochs):
     # writer.add_scalar('eval/bleu', utils.get_bleu(preds, golds), epoch+1)
     # writer.add_scalar('eval/true_hits', np.mean(hits), epoch+1)
     # out put setting by bing:
-    with open("conc_result.txt", "w", encoding="utf-8") as f:
-        for pred in preds:
-            pred_string = " ".join(pred)
-            f.write(pred_string + "\n")
+# only check the final result
+with open("concurrent_result.txt", "w", encoding="utf-8") as f:
+    for pred in preds:
+        pred_string = " ".join(pred)
+        f.write(pred_string + "\n")
 
 
