@@ -11,7 +11,6 @@ sample command: python seq2seq_baseline.py
 
 """
 
-
 from io import open
 import unicodedata
 import string
