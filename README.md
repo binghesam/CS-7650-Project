@@ -28,6 +28,11 @@ You need download pretrained bert model.
     - `bert-base-uncased-config.json` to `config.json`
     - `bert-base-uncased-vocab.txt` to `bert_vocab.txt`
 5. Place `model` ,`config` and `vocab` file into  the `./src/strongClassifier/pybert/pretrain/bert/base-uncased` directory.
+6. Modify your data format according to [kaggle data](https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/data) and place in `pybert/dataset`.
+    -  you can modify the `io.task_data.py` to adapt your data.
+7. Run `python run_bert.py --do_data` to preprocess data.
+8. Run `python run_bert.py --do_train --save_best --do_lower_case` to fine tuning bert model.
+9. Run `run_bert.py --do_test --do_lower_case` to predict new data.
 
 You need download pretrained GLOVE embedding.
 

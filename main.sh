@@ -30,23 +30,23 @@
 #   --learning_rate 0.0003 --epochs 20 --hidden_size 512 --train_batch_size 32 \
 #    --test_batch_size 16 --debias_weight 1.3 --working_dir train_tagging/
 
-# python ./src/detection/diyi/neutralizing-bias-master/src/tagging/train.py \
+# python ./src/detection/detection/train.py \
 # --train ./data/biased.full.filtered.train \
 # --test ./data/biased.full.filtered.test\
 # --categories_file ./data/revision_topics.csv \
 # --extra_features_top --pre_enrich --activation_hidden --category_input \
 # --learning_rate 0.0003 --epochs 6 --hidden_size 512 --train_batch_size 32 \
-# --test_batch_size 16 --debias_weight 1.3 --working_dir train_tagging/
+# --test_batch_size 16 --debias_weight 1.3 --working_dir train_detecting/
 
-cd ./src/detection/diyi2/neutralizing-bias2April13/src
-python tagging/train.py --train ./data/biased.full.filtered.train --test ./data/biased.full.filtered.test --categories_file ./data/revision_topics.csv --extra_features_top --pre_enrich --activation_hidden --category_input --learning_rate 0.0003 --epochs 10 --hidden_size 512 --train_batch_size 32 --test_batch_size 16 --debias_weight 1.3 --working_dir train_tagging/
+cd ./src/detection
+python detection/train.py --train ./data/biased.full.filtered.train --test ./data/biased.full.filtered.test --categories_file ./data/revision_topics.csv --extra_features_top --pre_enrich --activation_hidden --category_input --learning_rate 0.0003 --epochs 10 --hidden_size 512 --train_batch_size 32 --test_batch_size 16 --debias_weight 1.3 --working_dir train_detecting/
 cd ../../../../..
 # generate the json after processing
 
 # clustering probabiliy vector for each
 # TO DO change to best epoch result
 cd ./src/clustering/
-Rscript clustering_BIC.R ../detection/diyi2/neutralizing-bias2April13/src/final_result.json
+Rscript clustering_BIC.R ../detection/epoch_5_result.json
 python cluster_id_word.py
 python clean_cluster_words.py
 cd ../..
